@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import demo.dto.UserDTO;
+import demo.dto.UserRoleDTO;
 import demo.model.Role;
 import demo.model.User;
 import demo.model.UserRole;
@@ -22,31 +23,33 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	private List<UserRole> userRolesDTOtoUserRoles(List<UserRoleDTO> userRolesDTO, User user) {
+		List<UserRole> userRoles = new ArrayList<UserRole>();
+
+		if (userRolesDTO != null) {
+			for (int i = 0; i < userRolesDTO.size(); i++) {
+				Long userRoleId = userRolesDTO.get(i).getRoleId();
+				Role role = roleRepository.getReferenceById(userRoleId);
+
+				if (role != null) {
+					UserRole userRole = new UserRole();
+					userRole.setUser_info(user);
+					userRole.setRole(role);
+					userRoles.add(userRole);
+				}
+			}
+		}
+
+		return userRoles;
+	}
+
 	private User userDTOtoUser(UserDTO userDTO) {
 		User user = new User();
 		user.setId(userDTO.getId());
 		user.setFullName(userDTO.getFullName());
 		user.setPassword(userDTO.getPassword());
 		user.setUserName(userDTO.getUserName());
-
-		List<UserRole> userRoles = new ArrayList<UserRole>();
-
-		if (userDTO.getRoles() != null) {
-			for (int i = 0; i < userDTO.getRoles().size(); i++) {
-				Long userRoleId = userDTO.getRoles().get(i).getRoleId();
-				Role role = roleRepository.getReferenceById(userRoleId);
-
-				UserRole userRole = new UserRole();
-				userRole.setUser_info(user);
-				userRole.setRole(role);
-
-				if (userRole != null) {
-					userRoles.add(userRole);
-				}
-			}
-		}
-
-		user.setRoles(userRoles);
+		user.setRoles(userRolesDTOtoUserRoles(userDTO.getRoles(), user));
 
 		return user;
 	}
