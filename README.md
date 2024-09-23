@@ -1,6 +1,14 @@
 
 # Projeto em Spring Boot para estudo de API REST com Banco de Dados
 
+### Tecnologias Utilizadas
+- Hibernate
+- Lombok
+- PostgreSQL
+- Spring Boot
+- Spring Data JPA
+- Spring Web
+
 ### Exemplo para adicionar `role`
 `POST` em `/roles/add` com o seguinte `body`:
 ```
