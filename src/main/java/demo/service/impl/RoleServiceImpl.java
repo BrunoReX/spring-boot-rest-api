@@ -11,7 +11,7 @@ import demo.repository.RoleRepository;
 import demo.service.RoleService;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleRepository roleRepository;
 
@@ -22,17 +22,16 @@ public class RoleServiceImpl implements RoleService{
 
 		return rolesDTO;
 	}
-	
+
 	@Override
 	public RoleDTO createRole(RoleDTO roleDTO) {
 		Role role = new Role();
 		role.setName(roleDTO.getName());
-		
-		Role newRole = roleRepository.save(role);
-		
-		RoleDTO respRoleDTO = new RoleDTO(newRole);
-        return respRoleDTO;
-	}
 
+		Role newRole = roleRepository.save(role);
+
+		RoleDTO respRoleDTO = new RoleDTO(newRole);
+		return respRoleDTO;
+	}
 
 }

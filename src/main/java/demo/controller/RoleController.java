@@ -20,17 +20,17 @@ public class RoleController {
 	@Autowired
 	private RoleService roleService;
 
-	@PostMapping("/roles/add")
-	public ResponseEntity<RoleDTO> addRole(@RequestBody @Valid RoleDTO roleDTO) {
-		RoleDTO respRoleDTO = roleService.createRole(roleDTO);
-
-		return ResponseEntity.ok(respRoleDTO);
-	}
-
 	@GetMapping("/roles")
 	public ResponseEntity<List<RoleDTO>> getRoles() {
 		List<RoleDTO> roles = roleService.getRoles();
 
 		return ResponseEntity.ok(roles);
+	}
+
+	@PostMapping("/roles/add")
+	public ResponseEntity<RoleDTO> addRole(@RequestBody @Valid RoleDTO roleDTO) {
+		RoleDTO respRoleDTO = roleService.createRole(roleDTO);
+
+		return ResponseEntity.ok(respRoleDTO);
 	}
 }
