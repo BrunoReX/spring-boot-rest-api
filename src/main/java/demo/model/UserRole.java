@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "user_role")
-@SequenceGenerator(sequenceName="user_role_entity_seq", name="user_role_entity_seq", allocationSize=1)
+@SequenceGenerator(sequenceName = "user_role_entity_seq", name = "user_role_entity_seq", allocationSize = 1)
 public class UserRole {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_role_entity_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_role_entity_seq")
 	private Long id;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_user_info", referencedColumnName = "id")
 	private User user_info;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_role", referencedColumnName = "id")

@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +29,24 @@ public class RoleController {
 		return ResponseEntity.ok(roles);
 	}
 
+	@GetMapping("/roles/{id}")
+	public ResponseEntity<RoleDTO> getRole(@PathVariable Long id) {
+		RoleDTO roleDTO = roleService.getRole(id);
+
+		return ResponseEntity.ok(roleDTO);
+	}
+
 	@PostMapping("/roles/add")
 	public ResponseEntity<RoleDTO> addRole(@RequestBody @Valid RoleDTO roleDTO) {
 		RoleDTO respRoleDTO = roleService.createRole(roleDTO);
 
 		return ResponseEntity.ok(respRoleDTO);
+	}
+
+	@DeleteMapping("/roles/{id}/delete")
+	public ResponseEntity<String> deleteRole(@PathVariable Long id) {
+		roleService.deleteRole(roleService.getRole(id));
+
+		return ResponseEntity.ok(String.format("Role with id %d deleted!", id));
 	}
 }

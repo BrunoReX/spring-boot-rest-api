@@ -21,22 +21,22 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "user_info")
-@SequenceGenerator(sequenceName="user_info_entity_seq", name="user_info_entity_seq", allocationSize=1)
+@SequenceGenerator(sequenceName = "user_info_entity_seq", name = "user_info_entity_seq", allocationSize = 1)
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_info_entity_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_info_entity_seq")
 	private Long id;
-	
+
 	@NotEmpty
 	private String fullName;
-	
+
 	@NotEmpty
-	@Column(unique=true)
+	@Column(unique = true)
 	private String userName;
-	
+
 	@NotEmpty
 	private String password;
-	
-	@OneToMany(mappedBy = "user_info", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "user_info", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UserRole> roles;
 }

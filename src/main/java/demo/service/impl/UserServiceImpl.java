@@ -63,6 +63,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserDTO getUser(Long id) {
+		User user = userRepository.getReferenceById(id);
+
+		return new UserDTO(user);
+	}
+
+	@Override
 	public UserDTO createUser(UserDTO userDTO) {
 		User user = userDTOtoUser(userDTO);
 		User newUser = userRepository.save(user);
@@ -71,4 +78,12 @@ public class UserServiceImpl implements UserService {
 
 		return respUserDTO;
 	}
+
+	@Override
+	public boolean deleteUser(UserDTO userDTO) {
+		userRepository.delete(userDTOtoUser(userDTO));
+
+		return true;
+	}
+
 }
