@@ -36,14 +36,14 @@ public class UserController {
 		return ResponseEntity.ok(userDTO);
 	}
 
-	@PostMapping("/users/add")
+	@PostMapping("/users")
 	public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserDTO userDTO) {
 		UserDTO respUserDTO = userService.createUser(userDTO);
 
 		return ResponseEntity.ok(respUserDTO);
 	}
 
-	@DeleteMapping("/users/{id}/delete")
+	@DeleteMapping("/users/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 		userService.deleteUser(userService.getUser(id));
 

@@ -36,14 +36,14 @@ public class RoleController {
 		return ResponseEntity.ok(roleDTO);
 	}
 
-	@PostMapping("/roles/add")
+	@PostMapping("/roles")
 	public ResponseEntity<RoleDTO> addRole(@RequestBody @Valid RoleDTO roleDTO) {
 		RoleDTO respRoleDTO = roleService.createRole(roleDTO);
 
 		return ResponseEntity.ok(respRoleDTO);
 	}
 
-	@DeleteMapping("/roles/{id}/delete")
+	@DeleteMapping("/roles/{id}")
 	public ResponseEntity<String> deleteRole(@PathVariable Long id) {
 		roleService.deleteRole(roleService.getRole(id));
 

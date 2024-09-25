@@ -10,7 +10,7 @@
 - Spring Web
 
 ### Exemplo para adicionar `role`
-`POST` em `/roles/add` com o seguinte `body`:
+`POST` em `/roles` com o seguinte `body`:
 ```
 {
   "name": "ADMIN"
@@ -18,7 +18,7 @@
 ```
 
 ### Exemplo para adicionar `user` sem nenhuma `role`
-`POST` em `/users/add` com o seguinte `body`:
+`POST` em `/users` com o seguinte `body`:
 ```
 {
   "fullName": "John Darksouls",
@@ -28,7 +28,7 @@
 ```
 
 ### Exemplo para adicionar `user` com `roles`
-`POST` em `/users/add` com o seguinte `body`:
+`POST` em `/users` com o seguinte `body`:
 ```
 {
   "fullName": "John Darksouls",
@@ -129,7 +129,7 @@
 ```
 
 ### Exemplo para deletar item `role` com `id`
-`DELETE` em `/roles/1/delete`
+`DELETE` em `/roles/1`
 
 ### Exemplo para deletar item `user` com `id`
-`DELETE` em `/user/1/delete`
+`DELETE` em `/user/1`
