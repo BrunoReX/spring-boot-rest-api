@@ -3,8 +3,11 @@ package demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import demo.dto.RoleDTO;
 import demo.dto.UserRoleDTO;
@@ -64,20 +67,38 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public boolean deleteRole(RoleDTO roleDTO) {
-		roleRepository.delete(roleDTOtoRole(roleDTO));
+	public RoleDTO createRole(RoleDTO roleDTO) throws ResponseStatusException {
+		// Validar valores como apenas espaços
+		if (StringUtils.isBlank(roleDTO.getName())) {
+			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Empty values are not allowed!");
+		}
 
-		return true;
-	}
-
-	@Override
-	public RoleDTO createRole(RoleDTO roleDTO) {
-		Role role = new Role();
-		role.setName(roleDTO.getName());
-
+		Role role = roleDTOtoRole(roleDTO);
 		Role newRole = roleRepository.save(role);
 
 		RoleDTO respRoleDTO = new RoleDTO(newRole);
 		return respRoleDTO;
+	}
+
+	@Override
+	public RoleDTO updateRole(RoleDTO roleDTO) {
+		Role updatedRole = roleDTOtoRole(roleDTO);
+		Role origRole = roleRepository.getReferenceById(roleDTO.getId());
+
+		if (StringUtils.isBlank(roleDTO.getName())) {
+			updatedRole.setName(origRole.getName());
+		}
+
+		Role respRole = roleRepository.save(updatedRole);
+		RoleDTO respRoleDTO = new RoleDTO(respRole);
+
+		return respRoleDTO;
+	}
+
+	@Override
+	public boolean deleteRole(RoleDTO roleDTO) {
+		roleRepository.delete(roleDTOtoRole(roleDTO));
+
+		return true;
 	}
 }

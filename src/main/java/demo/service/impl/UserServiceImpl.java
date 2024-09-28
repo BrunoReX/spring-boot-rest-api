@@ -3,8 +3,11 @@ package demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import demo.dto.UserDTO;
 import demo.dto.UserRoleDTO;
@@ -70,11 +73,42 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO createUser(UserDTO userDTO) {
+	public UserDTO createUser(UserDTO userDTO) throws ResponseStatusException {
+		// Validar valores como apenas espaços
+		if (StringUtils.isAnyBlank(userDTO.getFullName(), userDTO.getUserName(), userDTO.getPassword())) {
+			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Empty values are not allowed!");
+		}
+
 		User user = userDTOtoUser(userDTO);
 		User newUser = userRepository.save(user);
 
 		UserDTO respUserDTO = new UserDTO(newUser);
+
+		return respUserDTO;
+	}
+
+	@Override
+	public UserDTO updateUser(UserDTO userDTO) {
+		User updatedUser = userDTOtoUser(userDTO);
+		User origUser = userRepository.getReferenceById(userDTO.getId());
+
+		// Checar se senha foi alterada
+		// Se não, utilizar senha original
+		if (StringUtils.isBlank(updatedUser.getPassword())) {
+			updatedUser.setPassword(origUser.getPassword());
+		}
+
+		// Não aceitar valores em branco ou apenas espaços
+		if (StringUtils.isBlank(updatedUser.getFullName())) {
+			updatedUser.setFullName(origUser.getFullName());
+		}
+
+		if (StringUtils.isBlank(updatedUser.getUserName())) {
+			updatedUser.setUserName(origUser.getUserName());
+		}
+
+		User respUser = userRepository.save(updatedUser);
+		UserDTO respUserDTO = new UserDTO(respUser);
 
 		return respUserDTO;
 	}
@@ -85,5 +119,4 @@ public class UserServiceImpl implements UserService {
 
 		return true;
 	}
-
 }

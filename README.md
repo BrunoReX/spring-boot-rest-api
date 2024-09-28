@@ -128,6 +128,40 @@
 }
 ```
 
+### Exemplo para atualizar `user` modificando as `roles`
+`PUT` em `/users/1` com o seguinte `body`:
+```
+{
+  "fullName": "John Darksouls",
+  "userName": "johndark",
+  "password": "estus",
+  "roles": [
+    {
+      "roleId": 1
+    }
+  ]
+}
+```
+
+### Exemplo para atualizar `user` removendo as `roles`
+`PUT` em `/users/1` com o seguinte `body`:
+```
+{
+  "fullName": "John Darksouls",
+  "userName": "johndark",
+  "password": "estus",
+  "roles": []
+}
+```
+
+### Exemplo para atualizar `role`
+`PUT` em `/roles/1` com o seguinte `body`:
+```
+{
+  "name": "SUPER_ADMIN"
+}
+```
+
 ### Exemplo para deletar item `role` com `id`
 `DELETE` em `/roles/1`
 

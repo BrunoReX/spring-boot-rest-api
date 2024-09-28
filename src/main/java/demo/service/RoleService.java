@@ -2,6 +2,8 @@ package demo.service;
 
 import java.util.List;
 
+import org.springframework.web.server.ResponseStatusException;
+
 import demo.dto.RoleDTO;
 
 public interface RoleService {
@@ -9,7 +11,9 @@ public interface RoleService {
 
 	RoleDTO getRole(Long id);
 
-	RoleDTO createRole(RoleDTO roleDTO);
+	RoleDTO createRole(RoleDTO roleDTO) throws ResponseStatusException;
+
+	RoleDTO updateRole(RoleDTO roleDTO);
 
 	boolean deleteRole(RoleDTO roleDTO);
 }
