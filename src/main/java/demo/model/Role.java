@@ -33,4 +33,9 @@ public class Role {
 
 	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UserRole> roles;
+
+	public Role(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 }
